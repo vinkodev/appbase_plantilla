@@ -1,10 +1,32 @@
 <ion-view view-title="Auctions">
+  <ion-content header-shrink scroll-event-interval="5">
+        <div style="height: 64px;"></div>
+      <ion-list ng-controller="readJson">
+        <ion-refresher pulling-text="Pull to refresh..." on-refresh="loadNewerStories()">
+        </ion-refresher>
+        <div class="list" ng-repeat="story in stories">
+                <a class="item item-thumbnail-left"         href="#/app/playlists/{{playlists[$index].id}">
+                    <img ng-src="{{story.thumbnail}}" ng-if="story.thumbnail.startsWith('http')">
+                    <h2>{{story.title}}</h2>
+                    <p>{{story.domain}}</p>
+                </a>
+        </div>
+        <ion-infinite-scroll on-infinite="loadOlderStories()" distance="1%">
+        </ion-infinite-scroll>
+      </ion-list>
+  </ion-content>
+</ion-view>
+
+<!--
+
+
+<ion-view view-title="Auctions">
   <ion-content>
-      <ion-list>
-        <div ng-repeat="auction in playlists">
+      <ion-list ng-controller="readJson">
+        <div ng-repeat="story in stories">
             <div class="row gallery" style="padding: none;" ng-if="$even">
                 <ion-item class="col col-50" href="#/app/playlists/{{playlists[$index].id}}" style="padding: 2px !important;border-radius: 8px;margin-left=1px;margin-right:4px;">
-                    <h3>{{playlists[$index].title}}</h3>
+                    <h3>{{story.title}}</h3>
                     <img style="width: 100%;" src="{{playlists[$index].src}}">
                     <i class="icon icon-left ion-social-euro item-text-wrap"> {{playlists[$index].price}}</i></br>
                     <i class="icon icon-left ion-clock item-text-wrap"> {{playlists[$index].timeLeft}}</i>
@@ -21,11 +43,4 @@
   </ion-content>
 </ion-view>
 
-<!--<ion-item class="col col-50" href="#/app/playlists/{{playlists[$index+1].id}}">
-                    <h3>{{playlists[$index+1].title}}</h3>
-                    <img src="{{playlists[$index+1].src}}">
-                    
-                    <div class="row">
-                        <div class="col col-25 icon icon-left ion-social-euro button button-positive item-text-wrap">{{playlists[$index+1].price}}</div>
-                        <div class="col col-75 icon icon-left ion-social-clock button button-positive item-text-wrap">{{playlists[$index+1].timeLeft}}</div>
-                    </div>-->
+-->
