@@ -5,10 +5,10 @@
         <ion-refresher pulling-text="Pull to refresh..." on-refresh="loadNewerStories()">
         </ion-refresher>
         <div class="list" ng-repeat="story in stories">
-                <a class="item item-thumbnail-left"         href="#/app/playlists/{{playlists[$index].id}">
-                    <img ng-src="{{story.thumbnail}}" ng-if="story.thumbnail.startsWith('http')">
+                <a class="item item-thumbnail-left"         href="#/app/playlists/{{story.id}" ng-click="getDetail(story)">
+                    <img ng-src="{{story.img}}" ng-if="story.img.startsWith('http')">
                     <h2>{{story.title}}</h2>
-                    <p>{{story.domain}}</p>
+                    <p>{{story.url}}</p>
                 </a>
         </div>
         <ion-infinite-scroll on-infinite="loadOlderStories()" distance="1%">

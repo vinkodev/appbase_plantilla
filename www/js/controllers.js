@@ -5,6 +5,14 @@ var historias = [];
     
 angular.module('ionic.example', ['ionic'])
 
+app.service('detailService', function() {
+    this.id;
+    this.title;
+    this.description;
+    this.url;
+    this.img;
+})
+
 app.directive('fakeStatusbar', function() {
   return {
     restrict: 'E',
@@ -94,21 +102,20 @@ app.controller('AppCtrl', function($scope, $ionicModal, $timeout) {
   };
 });
 
-app.controller('readJson' ,function($http,$scope){
+app.controller('readJson' ,function($http,$scope, detailService){
     
     $scope.stories = [];
     
     loadStories = function(params , callback){
         
-        $http.get('https://www.reddit.com/r/Android/new/.json', {params: params})
-        .success(function(response){
+        //$http.get('https://www.reddit.com/r/Android/new/.json', {params: params})
+        $http.get('http://sportdirigit.cat/inscripcions/testjson.php', {params: params})
+            .success(function(response){
         var stories = [];
-        angular.forEach(response.data.children,function(child){
-            stories.push(child.data);
-            historias.push(child.data);
+        angular.forEach(response.news,function(child){
+            stories.push(child);
         });
-          callback(stories); 
-            historias = $scope.stories;
+          callback(stories);
     });
         
     };
@@ -134,6 +141,12 @@ app.controller('readJson' ,function($http,$scope){
         });
     };
     
+    $scope.getDetail=function(ObjectData){
+        detailService.id=ObjectData.id;
+        detailService.title=ObjectData.title;
+        detailService.description=ObjectData.description;
+        detailService.url=ObjectData.url; detailService.img=ObjectData.img;
+    }
 });
 
 app.controller('PlaylistsCtrl', function($scope) {
@@ -147,16 +160,9 @@ app.controller('PlaylistsCtrl', function($scope) {
   ];
 });
 
-app.controller('PlaylistCtrl', function($scope, $stateParams) {
+app.controller('PlaylistCtrl', function($scope, $stateParams, detailService) {
+    $scope.detailService=detailService;
 });
     
-
-app.controller('PlaylistsCtrl2', function($scope) {
-    $scope.stories2 =[];
-    $scope.stories2 = historias;
-});
-    
-app.controller('PlaylistCtrl2', function($scope, $stateParams) {
-});
 
 }());
